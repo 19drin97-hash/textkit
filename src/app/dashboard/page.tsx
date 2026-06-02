@@ -7,6 +7,7 @@ const TOOLS = [
   { id: 'email', name: 'E-Mail Verbesserer', icon: '✉️', placeholder: 'Füge deine E-Mail hier ein...' },
   { id: 'text', name: 'Text Optimierer', icon: '✏️', placeholder: 'Füge deinen Text hier ein...' },
   { id: 'summary', name: 'Zusammenfassung', icon: '📋', placeholder: 'Füge den Text ein, der zusammengefasst werden soll...' },
+  { id: 'bmw', name: 'BMW Remote Coding', icon: '🚗', placeholder: '', href: '/dashboard/bmw-coding' },
 ];
 
 export default function DashboardPage() {
@@ -58,19 +59,29 @@ export default function DashboardPage() {
         <h1 className="text-2xl font-bold mb-6">Deine KI-Tools</h1>
 
         {/* Tool Selection */}
-        <div className="flex gap-3 mb-6">
+        <div className="flex gap-3 mb-6 flex-wrap">
           {TOOLS.map(tool => (
-            <button
-              key={tool.id}
-              onClick={() => { setActiveTool(tool.id); setInput(''); setOutput(''); }}
-              className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                activeTool === tool.id
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-white text-gray-700 border hover:bg-gray-50'
-              }`}
-            >
-              {tool.icon} {tool.name}
-            </button>
+            tool.href ? (
+              <Link
+                key={tool.id}
+                href={tool.href}
+                className="px-4 py-2 rounded-lg font-medium transition-colors bg-white text-gray-700 border hover:bg-gray-50 flex items-center gap-2"
+              >
+                <span>{tool.icon}</span> {tool.name}
+              </Link>
+            ) : (
+              <button
+                key={tool.id}
+                onClick={() => { setActiveTool(tool.id); setInput(''); setOutput(''); }}
+                className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                  activeTool === tool.id
+                    ? 'bg-blue-600 text-white'
+                    : 'bg-white text-gray-700 border hover:bg-gray-50'
+                }`}
+              >
+                {tool.icon} {tool.name}
+              </button>
+            )
           ))}
         </div>
 
